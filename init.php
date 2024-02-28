@@ -17,11 +17,12 @@ class  ArcSlider{
         add_action('admin_menu', array($this, 'arc_slider_menu'));
         add_action('init', array($this, 'arc_slider_setup'));
         add_action('add_meta_boxes', array($this, 'all_meta_boxes'));
-        add_action('admin_enqueue_scripts', array($this, 'wpse_80236_Colorpicker'));
+        add_action('admin_enqueue_scripts', array($this, 'wp_admin_styles_scripts'));
         add_action('save_post', array($this, 'arc_slider_metabox_data_save'));
+        add_shortcode("arc_slider", array($this, "arc_slider_retrive"));
     }
 
-    function wpse_80236_Colorpicker()
+    function wp_admin_styles_scripts()
     {
         wp_enqueue_style( 'wp-color-picker');
         //
@@ -35,7 +36,7 @@ class  ArcSlider{
             'read',
             'arc-slider',
             '',
-            'dashicons-calculator',
+            'dashicons-feedback',
             40 // Position
         );
     }
@@ -133,6 +134,22 @@ class  ArcSlider{
 
         update_post_meta(get_the_ID(), 'arc_content', esc_attr($arc_content));
         update_post_meta(get_the_ID(), 'arc_bg_color', esc_attr($arc_bg_color));
+    }
+
+    public function arc_slider_retrive($attr, $content)
+    {
+        $atts = shortcode_atts(
+            array(
+
+            ),
+            $attr
+        );
+        extract($atts);
+        ob_start(); ?>
+
+        <section>Arc SLider</section>
+
+    <?php     
     }
 
     
